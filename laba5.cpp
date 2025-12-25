@@ -48,4 +48,34 @@ public:
     bool isA(string& name) override { return (name == "Desc") || Base::isA(name); }
 
     void descSpecificMethod() { cout << "Desc::descSpecificMethod()\n"; }
+};
+
+void demo_virtual_and_nonvirtual() {
+    cout << "\n=== 1. ВИРТУАЛЬНЫЕ И НЕВИРТУАЛЬНЫЕ МЕТОДЫ ===\n";
+
+    Desc desc;
+    Base* basePtr = &desc;
+
+    cout << "\n1. Прямой вызов методов у объекта Desc:\n";
+    cout << "desc.nonVirtualMethod(): ";
+    desc.nonVirtualMethod(); // Desc::nonVirtualMethod()
+    cout << "desc.virtualMethod(): ";
+    desc.virtualMethod(); // Desc::virtualMethod()
+
+    cout << "\n2. Вызов через указатель Base*:\n";
+    cout << "basePtr->nonVirtualMethod(): ";
+    basePtr->nonVirtualMethod(); // Base::nonVirtualMethod()
+    cout << "basePtr->virtualMethod(): ";
+    basePtr->virtualMethod(); // Desc::virtualMethod()
+
+    cout << "\n3. Вызов callerMethod():\n";
+    cout << "desc.callerMethod():\n";
+    desc.callerMethod();  // Base::nonVirtualMethod(), Desc::virtualMethod()
+}
+
+int main() {
+    cout << "=== ЛАБОРАТОРНАЯ РАБОТА 5 ===" << endl;
+    cout << "Жизненный цикл объектов С++ и Виртуальность\n" << endl;
+
+    demo_virtual_and_nonvirtual();
 }
