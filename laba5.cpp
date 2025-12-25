@@ -73,9 +73,22 @@ void demo_virtual_and_nonvirtual() {
     desc.callerMethod();  // Base::nonVirtualMethod(), Desc::virtualMethod()
 }
 
+void demo_constructors_and_destructors() {
+    cout << "\n=== 2. ВИРТУАЛЬНЫЙ ДЕСТРУКТОР ===" << endl;
+    
+    cout << "\n2. Виртуальный деструктор:" << endl;
+    Base* polyPtr = new Desc();
+    cout << "Удаление через Base* указатель:" << endl;
+    delete polyPtr;  // Вызываются оба деструктора (~Desc() и ~Base())
+    
+    cout << "\n3. Без виртуального деструктора:" << endl;
+    cout << "Если бы деструктор Base не был виртуальным," << endl;
+    cout << "то при delete polyPtr вызвался бы только ~Base()" << endl;
+}
+
 int main() {
     cout << "=== ЛАБОРАТОРНАЯ РАБОТА 5 ===" << endl;
-    cout << "Жизненный цикл объектов С++ и Виртуальность\n" << endl;
 
     demo_virtual_and_nonvirtual();
+    demo_constructors_and_destructors();
 }
