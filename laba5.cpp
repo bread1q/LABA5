@@ -14,9 +14,9 @@ public:
 
     virtual ~Base() { cout << "~Base()\n"; }
 
-    void nonVirtualMethod() const { cout << "Base::nonVirtualMethod()\n"; }
-    virtual void virtualMethod() const { cout << "Base::virtualMethod()\n"; }
-    void callerMethod() const {
+    void nonVirtualMethod() { cout << "Base::nonVirtualMethod()\n"; }
+    virtual void virtualMethod() { cout << "Base::virtualMethod()\n"; }
+    void callerMethod() {
         cout << "Base::callerMethod() вызывает:\n";
         cout << "  1. nonVirtualMethod(): ";
         nonVirtualMethod();
@@ -24,8 +24,28 @@ public:
         virtualMethod();
     }
 
-    virtual string className() const { return "Base"; }
-    virtual bool isA(const string& type) const {
-        return type == "Base";
+    virtual string className() { return "Base"; }
+    virtual bool isA(string& name) {
+        return name == "Base";
     }
 };
+
+class Desc : public Base {
+public:
+    Desc() { cout << "Desc()\n"; }
+    Desc(Desc* obj) : Base(obj) { cout << "Desc(Desc*)\n"; }
+    Desc(Desc& obj) : Base(obj) { cout << "Desc(Desc&)\n"; }
+
+    ~Desc() override { cout << "~Desc()\n"; }
+
+    // перекрываемый метод
+    void nonVirtualMethod() { cout << "Desc::nonVirtualMethod()\n"; }
+
+    // переопределенный метод
+    void virtualMethod() override { cout << "Desc::virtualMethod()\n"; }
+
+    string className() override { return "Desc"; }
+    bool isA(string& name) override { return (name == "Desc") || Base::isA(name); }
+
+    void descSpecificMethod() { cout << "Desc::descSpecificMethod()\n"; }
+}
